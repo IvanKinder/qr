@@ -1,21 +1,27 @@
-import { ScrollView, StyleSheet, Button } from "react-native"
+import { ScrollView, StyleSheet, Button, Text, View } from "react-native"
 import Context from "../context/Context";
 import { useContext } from "react";
 import { openBrowserAsync } from "expo-web-browser";
 
 const WeatherList = () => {
     const { sharedState, updateState } = useContext(Context);
-    console.log(sharedState.weatherList);
 
     const placeTap = async (uri) => {
         await openBrowserAsync(uri);
     }
 
     const Places = () => {
+        if (sharedState.weatherList.length > 0) {
+            return (
+                <ScrollView contentContainerStyle={styles.places}>
+                    {sharedState.weatherList.map(place => <Button title={place} key={place} onPress={() => placeTap(place)} />)}
+                </ScrollView>
+            )
+        }
         return (
-            <ScrollView contentContainerStyle={styles.places}>
-                {sharedState.weatherList.map(place => <Button title={place} key={place} onPress={() => placeTap(place)} />)}
-            </ScrollView>
+            <View style={styles.empty}>
+                <Text>Empty list</Text>
+            </View>
         )
     }
 
@@ -25,6 +31,9 @@ const WeatherList = () => {
 }
 
 const styles = StyleSheet.create({
+    empty: {
+        alignItems: "center",
+    },
     places: {
         flex: 1,
         gap: 5,
