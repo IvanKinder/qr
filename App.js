@@ -4,9 +4,9 @@ import { StateProvider } from "./context/Context";
 import Scanner from "./Screens/Scanner";
 import WeatherList from "./Screens/WeatherList";
 
- const Stack = createStackNavigator();
+const Stack = createStackNavigator();
 
- function App() {
+function App() {
   return (
     <StateProvider>
       <Stack.Navigator>
@@ -15,12 +15,12 @@ import WeatherList from "./Screens/WeatherList";
       </Stack.Navigator>
     </StateProvider>
   )
- }
+}
 
- export default () => {
+export default () => {
   return (
-     <NavigationContainer>
-      <App />
-     </NavigationContainer>
+    <NavigationContainer>
+    <App />
+    </NavigationContainer>
   )
- }
+}

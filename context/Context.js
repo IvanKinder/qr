@@ -1,4 +1,6 @@
 import React, { createContext, useState } from "react";
+import { ref, set } from "firebase/database";
+import { db } from "../db/db";
 
 const Context = createContext(undefined);
 
@@ -7,6 +9,7 @@ export const StateProvider = ({ children }) => {
 
     const updateState = (newState) => {
         setSharedState(newState);
+        set(ref(db, 'locations/'), newState.weatherList);
     };
 
     return (

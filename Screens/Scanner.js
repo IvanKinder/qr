@@ -4,6 +4,9 @@ import { CameraView, Camera } from "expo-camera/next";
 import { useNavigation } from "@react-navigation/native";
 import { openBrowserAsync } from "expo-web-browser";
 import Context from "../context/Context";
+import { db } from "../db/db";
+import { ref, get, child } from "firebase/database";
+
 
 
 const Scanner = () => {
@@ -19,6 +22,20 @@ const Scanner = () => {
       setHasPerm(status === "granted");
     }
     getPermissions();
+
+    const getLocations = () => {
+      get(child(ref(db), "locations")).then((snapshot) => {
+          if (snapshot.exists()) {
+            updateState({
+              ...sharedState,
+              weatherList: snapshot.val(),
+            });
+          }
+        }).catch((error) => {
+          console.error(null);
+        });
+    }
+    getLocations();
   }, [])
 
   if (hasPerm === null) {
